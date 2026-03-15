@@ -1,9 +1,21 @@
 name: Deloy Project
 on: [push,workflow_dispatch]
 jobs:
-  Checkout:
+  Install_dependencies_job:
      runs-on: ubuntu-latest
      steps:
+         - name: Checkout the git code
+           uses: actions/checkout@v3
+         - name: Install nodeJS
+           uses: actions/setup-node@v3
+           with:
+             node-version: 18
+         - name: Install dependencies
+           run: npm ci
+  Test_the_deployment:
+        runs-on: ubuntu-latest
+        needs: Install_dependencies_job
+        steps:
          - name: Checkout the git code
            uses: actions/checkout@v3
          - name: Install nodeJS
@@ -18,7 +30,23 @@ jobs:
              eslint: true
          - name: Test the deployment
            run: npm test
-         - name: Deploy the application
-           run: npm run build
-         - name: Deply status
-           run: echo "Deploying ..."
+  Deploy_the_application:
+       runs-on: ubuntu-latest
+       needs: Test_the_deployment
+       steps:
+        - name: Checkout the git code
+          uses: actions/checkout@v3
+        - name: Install nodeJS
+          uses: actions/setup-node@v3
+          with:
+            node-version: 18
+        - name: Install dependencies
+          run: npm ci
+        - name: Run Linters
+          uses: wearerequired/lint-action@v2
+          with: 
+            eslint: true
+        - name: Deploy the application
+          run: npm run build
+        - name: Deply status
+          run: echo "Deploying ..."

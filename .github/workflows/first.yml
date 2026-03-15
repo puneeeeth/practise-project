@@ -2,7 +2,7 @@ name: Deloy Project
 on: [push,workflow_dispatch]
 jobs:
   Checkout:
-     runs-on: ubuntu_latest
+     runs-on: ubuntu-latest
      steps:
          - name: Checkout the git code
            uses: actions/checkout@v3

@@ -1,8 +1,10 @@
 name: Issue Number Example
 on:
   issue_comment:
-  types: 
-    - created
+    types: 
+      - opened
+      - edited
+      - closed
 jobs:
   Output_job:
     runs-on: ubuntu-latest

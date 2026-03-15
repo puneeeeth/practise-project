@@ -1,7 +1,8 @@
 name: Issue Number Example
 on:
   issue_comment:
-  types: [created]
+  types: 
+    - created
 jobs:
   Output_job:
     runs-on: ubuntu-latest

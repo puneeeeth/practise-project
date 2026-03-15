@@ -1,6 +1,6 @@
 name: Issue Number Example
 on:
-  issue_comment:
+  issues:
     types: 
       - opened
       - edited
